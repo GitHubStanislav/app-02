@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import CounterFirst from "@/app/components/CounterFirst";
+import MyInputFirst from "@/app/components/MyInputFirst";
 
 export default function Home() {
   const [likes, setLikes] = useState(0);
@@ -16,25 +18,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-start m-9 ">
-      <input
-        className="border-4 border-black-500 bo rounded-md p-2 mb-2"
-        value={value}
-        onChange={handleInputChange}
-        type="text"
+      <MyInputFirst value={value} onChangeInput={handleInputChange} />
+      <CounterFirst
+        likes={likes}
+        incrementHandler={increment}
+        decrementHandler={decrement}
       />
-      <div className="border border-gray-500 rounded-md p-2 mb-2 ">{likes}</div>
-      <button
-        onClick={increment}
-        className="border border-gray-500 rounded-md px-4 py-2 mb-2 bg-emerald-950 text-gray-50 w-1/5"
-      >
-        +
-      </button>
-      <button
-        onClick={decrement}
-        className="border border-gray-500 rounded-md px-4 py-2 bg-red-800 text-gray-50 w-1/5"
-      >
-        -
-      </button>
     </div>
   );
 }
