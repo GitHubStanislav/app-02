@@ -9,10 +9,18 @@ export default function Home() {
   const addUsersHandler = (user) => {
     setDataListElements((prevUsers) => [...prevUsers, user]);
   };
+  const removeListElement = (user) => {
+    setDataListElements((prevUsers) =>
+      prevUsers.filter((u) => u.id !== user.id)
+    );
+  };
   return (
     <>
       <FormTestInput addUsers={addUsersHandler} />
-      <ListBio dataListElements={dataListElements} />
+      <ListBio
+        removeHandler={removeListElement}
+        dataListElements={dataListElements}
+      />
     </>
   );
 }

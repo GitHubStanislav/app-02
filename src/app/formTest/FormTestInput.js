@@ -47,7 +47,10 @@ const FormTestInput = ({ addUsers }) => {
   };
 
   return (
-    <form className="max-w-md mx-auto m-9" onSubmit={handleSubmit}>
+    <form
+      className="max-w-md mx-auto m-5 border border-gray-300 p-4 rounded-lg"
+      onSubmit={handleSubmit}
+    >
       <h1 className="text-gray-700 text-xl font-bold">TEST FORM</h1>
       <div className="mb-4">
         <label
