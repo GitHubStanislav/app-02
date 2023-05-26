@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const FormTestInput = ({ addUsers }) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [profession, setProfession] = useState("");
   const [bio, setBio] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -22,6 +23,13 @@ const FormTestInput = ({ addUsers }) => {
     setBio(e.target.value);
   };
 
+  useEffect(() => {
+    // Проверка заполненности всех полей
+    const isValid =
+      name !== "" && age !== "" && profession !== "" && bio !== "";
+    setIsFormValid(isValid);
+  }, [name, age, profession, bio]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
@@ -32,6 +40,10 @@ const FormTestInput = ({ addUsers }) => {
       bio: bio,
     };
     addUsers(userData);
+    setName("");
+    setAge("");
+    setProfession("");
+    setBio("");
   };
 
   return (
@@ -103,7 +115,12 @@ const FormTestInput = ({ addUsers }) => {
       </div>
       <button
         type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+        className={`${
+          isFormValid
+            ? "bg-blue-600 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+            : "bg-slate-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+        }`}
+        disabled={!isFormValid}
       >
         Submit
       </button>
