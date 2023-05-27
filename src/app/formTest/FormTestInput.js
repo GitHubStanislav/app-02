@@ -24,7 +24,6 @@ const FormTestInput = ({ addUsers }) => {
   };
 
   useEffect(() => {
-    // Проверка заполненности всех полей
     const isValid =
       name !== "" && age !== "" && profession !== "" && bio !== "";
     setIsFormValid(isValid);
@@ -48,7 +47,7 @@ const FormTestInput = ({ addUsers }) => {
 
   return (
     <form
-      className="max-w-md mx-auto m-5 border border-gray-300 p-4 rounded-lg"
+      className="max-w-md mx-auto m-5 border border-gray-300 p-4 rounded-lg bg-gray-100"
       onSubmit={handleSubmit}
     >
       <h1 className="text-gray-700 text-xl font-bold">TEST FORM</h1>
@@ -120,8 +119,8 @@ const FormTestInput = ({ addUsers }) => {
         type="submit"
         className={`${
           isFormValid
-            ? "bg-blue-600 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
-            : "bg-slate-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+            ? "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
+            : "bg-slate-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-lg"
         }`}
         disabled={!isFormValid}
       >

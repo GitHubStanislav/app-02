@@ -49,7 +49,7 @@ function Home() {
           { value: "age", name: "Sort by age" },
           { value: "profession", name: "Sort by profession" },
         ]}
-        defaultValue="Sort by:"
+        defaultValue="Sort by"
       />
       {dataListElements.length !== 0 ? (
         <ListBio
