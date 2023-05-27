@@ -1,30 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import ListBio from "@/app/formTest/ListBio";
 import FormTestInput from "@/app/formTest/FormTestInput";
 import DATA_BIO from "@/app/formTest/data";
 import MySelect from "@/app/formTest/UI/MySelect";
+import MyInput from "@/app/formTest/UI/MyInput";
 
 function Home() {
   const emptyListMessage = (
     <h2 className="text-xl text-center">Your list is empty</h2>
   );
-  const [dataListElements, setDataListElements] = useState(DATA_BIO);
+  const [dataList, setDataList] = useState(DATA_BIO);
   const [selectedSort, setSelectedSort] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
-  const addUsersHandler = (user) => {
-    setDataListElements((prevUsers) => [...prevUsers, user]);
+  const filteredData = useMemo(() => {
+    return dataList.filter((item) => {
+      return item.name.toLowerCase().includes(searchValue.toLowerCase());
+    });
+  }, [dataList, searchValue]);
+
+  const addUser = (user) => {
+    setDataList((prevDataList) => [...prevDataList, user]);
   };
 
-  const removeListElement = (user) => {
-    setDataListElements((prevUsers) =>
-      prevUsers.filter((u) => u.id !== user.id)
+  const removeUser = (user) => {
+    setDataList((prevDataList) =>
+      prevDataList.filter((item) => item.id !== user.id)
     );
   };
 
   const sortList = (sort) => {
     setSelectedSort(sort);
-    setDataListElements((prevDataList) =>
+    setDataList((prevDataList) =>
       [...prevDataList].sort((a, b) => {
         const valueA = a[sort];
         const valueB = b[sort];
@@ -38,9 +46,14 @@ function Home() {
       })
     );
   };
+
   return (
     <>
-      <FormTestInput addUsers={addUsersHandler} />
+      <FormTestInput addUser={addUser} />
+      <MyInput
+        value={searchValue}
+        onChange={(event) => setSearchValue(event.target.value)}
+      />
       <MySelect
         value={selectedSort}
         onChange={sortList}
@@ -51,11 +64,8 @@ function Home() {
         ]}
         defaultValue="Sort by"
       />
-      {dataListElements.length !== 0 ? (
-        <ListBio
-          removeHandler={removeListElement}
-          dataListElements={dataListElements}
-        />
+      {dataList.length !== 0 ? (
+        <ListBio removeHandler={removeUser} dataListElements={filteredData} />
       ) : (
         emptyListMessage
       )}
