@@ -13,6 +13,10 @@ const MyModal = ({ children }) => {
     document.body.style.overflow = "auto";
   };
 
+  const closeModalHandler = () => {
+    closeModal();
+  };
+
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
       closeModal();
@@ -51,7 +55,7 @@ const MyModal = ({ children }) => {
           <div className="modal-container bg-white w-96 rounded shadow-lg z-50">
             <div className="modal-content p-4">{children}</div>
             <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded absolute top-5 right-5"
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded absolute top-2 right-2"
               onClick={closeModal}
             >
               Close
