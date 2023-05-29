@@ -13,10 +13,6 @@ const MyModal = ({ children }) => {
     document.body.style.overflow = "auto";
   };
 
-  const closeModalHandler = () => {
-    closeModal();
-  };
-
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
       closeModal();

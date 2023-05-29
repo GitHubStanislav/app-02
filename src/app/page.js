@@ -11,6 +11,7 @@ function Home() {
   const emptyListMessage = (
     <h2 className="text-xl text-center">Your list is empty</h2>
   );
+
   const [dataList, setDataList] = useState(DATA_BIO);
   const [selectedSort, setSelectedSort] = useState("");
   const [searchValue, setSearchValue] = useState("");
