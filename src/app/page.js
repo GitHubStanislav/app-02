@@ -5,6 +5,7 @@ import FormTestInput from "@/app/formTest/FormTestInput";
 import DATA_BIO from "@/app/formTest/data";
 import MySelect from "@/app/formTest/UI/MySelect";
 import MyInput from "@/app/formTest/UI/MyInput";
+import MyModal from "@/app/formTest/UI/myModal/MyModal";
 
 function Home() {
   const emptyListMessage = (
@@ -49,7 +50,9 @@ function Home() {
 
   return (
     <>
-      <FormTestInput addUser={addUser} />
+      <MyModal>
+        <FormTestInput addUser={addUser} />
+      </MyModal>
       <MyInput
         value={searchValue}
         onChange={(event) => setSearchValue(event.target.value)}

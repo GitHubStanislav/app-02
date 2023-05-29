@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const FormTestInput = ({ addUsers }) => {
+const FormTestInput = ({ addUser }) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [profession, setProfession] = useState("");
@@ -29,20 +29,18 @@ const FormTestInput = ({ addUsers }) => {
     setIsFormValid(isValid);
   }, [name, age, profession, bio]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const userData = {
-      id: bio,
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newUser = {
+      id: Date.now(),
       name: name,
       age: age,
       profession: profession,
-      bio: bio,
     };
-    addUsers(userData);
+    addUser(newUser); // Вместо addUsers(newUser)
     setName("");
     setAge("");
     setProfession("");
-    setBio("");
   };
 
   return (
