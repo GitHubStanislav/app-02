@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useTransition, animated, useSpring } from "@react-spring/web";
 import ListBio from "@/app/formTest/ListBio";
 import FormTestInput from "@/app/formTest/FormTestInput";
 import DATA_BIO from "@/app/formTest/data";
@@ -16,6 +17,17 @@ function Home() {
   const [selectedSort, setSelectedSort] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const transitions = useTransition(isModalOpen, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
+
+  const styles = useSpring({
+    opacity: isModalOpen ? 1 : 0,
+    config: { duration: 300 },
+  });
 
   const openModal = useCallback(() => {
     setIsModalOpen(true);
@@ -95,10 +107,34 @@ function Home() {
       >
         Add User
       </button>
-      {isModalOpen && (
-        <MyModal closeModal={closeModal}>
-          <FormTestInput addUser={addUser} closeModal={closeModal} />
-        </MyModal>
+      {transitions(
+        (styles, item) =>
+          item && (
+            <animated.div
+              className="modal-overlay"
+              style={{
+                ...styles,
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                zIndex: 999,
+              }}
+            >
+              <div className="modal-container">
+                <div className="modal-content">
+                  <MyModal closeModal={closeModal}>
+                    <FormTestInput addUser={addUser} closeModal={closeModal} />
+                  </MyModal>
+                </div>
+              </div>
+            </animated.div>
+          )
       )}
       <MyInput
         value={searchValue}
