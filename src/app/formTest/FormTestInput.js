@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const FormTestInput = ({ addUser }) => {
+const FormTestInput = ({ addUser, closeModal }) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [profession, setProfession] = useState("");
@@ -41,6 +41,7 @@ const FormTestInput = ({ addUser }) => {
     setName("");
     setAge("");
     setProfession("");
+    closeModal();
   };
 
   return (

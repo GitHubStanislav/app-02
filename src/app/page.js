@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import ListBio from "@/app/formTest/ListBio";
 import FormTestInput from "@/app/formTest/FormTestInput";
 import DATA_BIO from "@/app/formTest/data";
@@ -15,6 +15,44 @@ function Home() {
   const [dataList, setDataList] = useState(DATA_BIO);
   const [selectedSort, setSelectedSort] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = useCallback(() => {
+    setIsModalOpen(true);
+    document.body.style.overflow = "hidden";
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    document.body.style.overflow = "auto";
+  }, []);
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    },
+    [closeModal]
+  );
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (event.target.classList.contains("modal-overlay")) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isModalOpen, handleKeyDown, closeModal]);
 
   const filteredData = useMemo(() => {
     return dataList.filter((item) => {
@@ -22,17 +60,17 @@ function Home() {
     });
   }, [dataList, searchValue]);
 
-  const addUser = (user) => {
+  const addUser = useCallback((user) => {
     setDataList((prevDataList) => [...prevDataList, user]);
-  };
+  }, []);
 
-  const removeUser = (user) => {
+  const removeUser = useCallback((user) => {
     setDataList((prevDataList) =>
       prevDataList.filter((item) => item.id !== user.id)
     );
-  };
+  }, []);
 
-  const sortList = (sort) => {
+  const sortList = useCallback((sort) => {
     setSelectedSort(sort);
     setDataList((prevDataList) =>
       [...prevDataList].sort((a, b) => {
@@ -44,16 +82,24 @@ function Home() {
         } else if (typeof valueA === "number" && typeof valueB === "number") {
           return valueA - valueB;
         }
-        return 0; // Handle case where sort property is undefined or not a string/number
+        return 0;
       })
     );
-  };
+  }, []);
 
   return (
     <>
-      <MyModal>
-        <FormTestInput addUser={addUser} />
-      </MyModal>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-5"
+        onClick={openModal}
+      >
+        Add User
+      </button>
+      {isModalOpen && (
+        <MyModal closeModal={closeModal}>
+          <FormTestInput addUser={addUser} closeModal={closeModal} />
+        </MyModal>
+      )}
       <MyInput
         value={searchValue}
         onChange={(event) => setSearchValue(event.target.value)}
