@@ -22,11 +22,16 @@ const PostTest = () => {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-wrap overflow-y-hidden">
       {cards.map((card) => (
-        <PostsTest key={card.id} card={card} />
+        <div
+          className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-4"
+          key={card.id}
+        >
+          <PostsTest card={card} />
+        </div>
       ))}
-    </>
+    </div>
   );
 };
 
