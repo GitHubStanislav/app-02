@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import io from "socket.io-client";
 import CoinList from "./CoinList";
 
 const App1 = () => {
@@ -33,35 +32,6 @@ const App1 = () => {
 
     fetchData();
     fetchExchangeRate();
-
-    const socket = io("wss://streamer.cryptocompare.com/v2");
-
-    const subscription = {
-      action: "SubAdd",
-      subs: ["5~CCCAGG~UAH~USD", "5~CCCAGG~UAH~ETH"], // Replace with desired currency pairs
-    };
-
-    socket.emit("SubAdd", subscription);
-
-    socket.on("m", (message) => {
-      const data = JSON.parse(message);
-      const coinData = data?.split("~");
-      const coinSymbol = coinData[coinData.length - 2];
-      const coinPrice = coinData[coinData.length - 1];
-
-      setCryptocurrencies((prevState) =>
-        prevState.map((crypto) =>
-          crypto.symbol === coinSymbol
-            ? { ...crypto, current_price: coinPrice }
-            : crypto
-        )
-      );
-    });
-
-    return () => {
-      socket.emit("SubRemove", subscription);
-      socket.disconnect();
-    };
   }, []);
 
   return (
