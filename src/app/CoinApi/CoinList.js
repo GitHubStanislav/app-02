@@ -8,11 +8,10 @@ const CoinList = ({ cryptocurrencies, exchangeRate }) => {
       <ul className="space-y-4">
         {cryptocurrencies.map((crypto) => {
           const priceInUAH = crypto.current_price * exchangeRate;
-
           return (
             <li
               key={crypto.id}
-              className="bg-gray-800 p-4 rounded-md flex items-center"
+              className="bg-gray-800 p-4 rounded-md flex items-center space-x-4"
             >
               <div className="flex items-center">
                 <div className="mr-4">
@@ -24,10 +23,19 @@ const CoinList = ({ cryptocurrencies, exchangeRate }) => {
                   />
                 </div>
                 <div>
-                  <p className="font-bold">{crypto.name}</p>
-                  <p>Current Price: ${crypto.current_price}</p>
-                  <p>Price in UAH: ₴{priceInUAH.toFixed(2)}</p>
-                  <p>Market Cap: ${crypto.market_cap}</p>
+                  <p>
+                    <span className="font-bold">{crypto.name}</span>
+                    <span className="text-gray-400"> | </span>
+                    <span className="text-sm">{crypto.symbol}</span>
+                  </p>
+                  <div className="border-b border-gray-500 my-2"></div>
+                  <p className="text-sm">
+                    Current Price: ${crypto.current_price}
+                  </p>
+                  <p className="text-sm">
+                    Price in UAH: ₴{priceInUAH.toFixed(2)}
+                  </p>
+                  <p className="text-sm">Market Cap: ${crypto.market_cap}</p>
                 </div>
               </div>
             </li>
