@@ -1,11 +1,10 @@
 "use client";
-
-import PostTest from "@/app/dammyListItems/PostTest";
+import App1 from "@/app/CoinApi/App1";
 
 function Home() {
   return (
     <>
-      <PostTest />
+      <App1 />
     </>
   );
 }
