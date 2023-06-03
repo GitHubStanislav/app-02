@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import InfiniteScroll from "react-infinite-scroll-component";
 import CryptoList1 from "./CriptoList1";
 
 const App1 = () => {
   const [cryptocurrencies, setCryptocurrencies] = useState([]);
   const [exchangeRate, setExchangeRate] = useState(0);
   const [visibleCryptocurrencies, setVisibleCryptocurrencies] = useState([]);
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,30 +37,46 @@ const App1 = () => {
   }, []);
 
   useEffect(() => {
-    setVisibleCryptocurrencies(cryptocurrencies.slice(0, 30));
-  }, [cryptocurrencies]);
+    setVisibleCryptocurrencies(
+      cryptocurrencies.slice((currentPage - 1) * 10, currentPage * 10)
+    );
+  }, [cryptocurrencies, currentPage]);
 
-  const fetchMoreCryptocurrencies = () => {
-    const nextPage = page + 1;
-    const newVisibleCryptocurrencies = cryptocurrencies.slice(0, nextPage * 10);
-    setVisibleCryptocurrencies(newVisibleCryptocurrencies);
-    setPage(nextPage);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const renderPagination = () => {
+    const totalPages = Math.ceil(cryptocurrencies.length / 10);
+    const paginationItems = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+      paginationItems.push(
+        <button
+          key={i}
+          className={`px-4 py-2 mx-1 rounded-md ${
+            i === currentPage
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-900"
+          }`}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return paginationItems;
   };
 
   return (
     <div className="bg-white text-gray-900 p-8">
       <h1 className="text-4xl font-bold mb-4">List Crypto</h1>
-      <InfiniteScroll
-        dataLength={visibleCryptocurrencies.length}
-        next={fetchMoreCryptocurrencies}
-        hasMore={visibleCryptocurrencies.length < cryptocurrencies.length}
-        loader={<p>Loading more cryptocurrencies...</p>}
-      >
-        <CryptoList1
-          cryptocurrencies={visibleCryptocurrencies}
-          exchangeRate={exchangeRate}
-        />
-      </InfiniteScroll>
+      <CryptoList1
+        cryptocurrencies={visibleCryptocurrencies}
+        exchangeRate={exchangeRate}
+      />
+      <div className="flex justify-center mt-4">{renderPagination()}</div>
     </div>
   );
 };
