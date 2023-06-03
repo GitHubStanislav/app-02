@@ -1,9 +1,19 @@
 import React from "react";
 import Image from "next/image";
 
-const CryptoList = ({ cryptocurrencies, exchangeRate }) => {
+const CryptoList1 = ({ cryptocurrencies, exchangeRate }) => {
   return (
     <ul className="mt-4 space-y-4 bg-gray-100 rounded-md divide-y divide-gray-200">
+      <div className="bg-gray-100 flex justify-between">
+        <div className="w-full md:w-1/6 mb-4 md:mb-0 flex items-center">
+          <div className="mr-2">Coin</div>
+        </div>
+        <div className="w-full md:w-5/6 flex flex-wrap">
+          <div className="w-1/3">Current Price (USD):</div>
+          <div className="w-1/3">Current Price (UAH):</div>
+          <div className="w-1/3">24-hour Price Change:</div>
+        </div>
+      </div>
       {cryptocurrencies.map((crypto) => (
         <li
           key={crypto.id}
@@ -37,4 +47,4 @@ const CryptoList = ({ cryptocurrencies, exchangeRate }) => {
   );
 };
 
-export default CryptoList;
+export default CryptoList1;

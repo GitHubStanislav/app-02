@@ -57,12 +57,6 @@ const App1 = () => {
         hasMore={visibleCryptocurrencies.length < cryptocurrencies.length}
         loader={<p>Loading more cryptocurrencies...</p>}
       >
-        <div className="bg-gray-100 flex">
-          <div>Current Price (USD):</div>
-          <div>Current Price (UAH):</div>
-          <div>1-hour Price Change:</div>
-          <div>24-hour Price Change:</div>
-        </div>
         <CryptoList1
           cryptocurrencies={visibleCryptocurrencies}
           exchangeRate={exchangeRate}
