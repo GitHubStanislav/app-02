@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useTransition, animated, useSpring } from "@react-spring/web";
 import ListBio from "@/app/formTest/ListBio";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
-import CryptoList from "./CryptoList";
+import CryptoList1 from "./CriptoList1";
 
 const App1 = () => {
   const [cryptocurrencies, setCryptocurrencies] = useState([]);
@@ -43,7 +43,7 @@ const App1 = () => {
 
   const fetchMoreCryptocurrencies = () => {
     const nextPage = page + 1;
-    const newVisibleCryptocurrencies = cryptocurrencies.slice(0, nextPage * 20);
+    const newVisibleCryptocurrencies = cryptocurrencies.slice(0, nextPage * 10);
     setVisibleCryptocurrencies(newVisibleCryptocurrencies);
     setPage(nextPage);
   };
@@ -57,7 +57,13 @@ const App1 = () => {
         hasMore={visibleCryptocurrencies.length < cryptocurrencies.length}
         loader={<p>Loading more cryptocurrencies...</p>}
       >
-        <CryptoList
+        <div className="bg-gray-100 flex">
+          <div>Current Price (USD):</div>
+          <div>Current Price (UAH):</div>
+          <div>1-hour Price Change:</div>
+          <div>24-hour Price Change:</div>
+        </div>
+        <CryptoList1
           cryptocurrencies={visibleCryptocurrencies}
           exchangeRate={exchangeRate}
         />
