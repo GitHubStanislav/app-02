@@ -1,11 +1,11 @@
 "use client";
 
-import App from "@/app/formTest/App";
+import CounterApp from "@/app/counter/counterApp";
 
 function Home() {
   return (
     <>
-      <App />
+      <CounterApp />
     </>
   );
 }
