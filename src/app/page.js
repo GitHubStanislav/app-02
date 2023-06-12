@@ -1,11 +1,11 @@
 "use client";
 
-import App1 from "@/app/CoinApi/App1";
+import App from "@/app/formTest/App";
 
 function Home() {
   return (
     <>
-      <App1 />
+      <App />
     </>
   );
 }

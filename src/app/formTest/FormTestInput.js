@@ -37,7 +37,7 @@ const FormTestInput = ({ addUser, closeModal }) => {
       age: age,
       profession: profession,
     };
-    addUser(newUser); // Вместо addUsers(newUser)
+    addUser(newUser);
     setName("");
     setAge("");
     setProfession("");
